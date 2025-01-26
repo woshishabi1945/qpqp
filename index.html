@@ -30,12 +30,21 @@
 
     // 点击按钮时的操作
     async function handleClick() {
+      if (!userName) {
+        alert("用户名未定义！");
+        return;
+      }
+
       alert("按钮已点击！");
-      await fetch('/api/logClick', {
+      const response = await fetch('/api/logClick', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: userName }),
+        body: JSON.stringify({ name: userName }), // 发送用户名
       });
+
+      if (!response.ok) {
+        alert("记录失败！");
+      }
     }
 
     // 后台登录
