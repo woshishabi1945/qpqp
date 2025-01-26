@@ -19,16 +19,24 @@
         return;
       }
 
-      const response = await fetch('/api/getUsers');
-      const users = await response.json();
+      try {
+        const response = await fetch('/api/getUsers'); // 请求用户数据
+        if (!response.ok) throw new Error('请求失败！');
 
-      const container = document.getElementById('userList');
-      container.innerHTML = '<h2>已点击的用户列表</h2>';
-      users.forEach(user => {
-        const item = document.createElement('div');
-        item.innerText = `名字: ${user.name}, 点击时间: ${user.time}`;
-        container.appendChild(item);
-      });
+        const users = await response.json(); // 解析数据
+        const container = document.getElementById('userList');
+        container.innerHTML = '<h2>已点击的用户列表</h2>';
+
+        // 遍历并显示用户数据
+        users.forEach(user => {
+          const item = document.createElement('div');
+          item.innerText = `名字: ${user.name}, 点击时间: ${user.time}`;
+          container.appendChild(item);
+        });
+      } catch (error) {
+        alert("加载用户数据失败！");
+        console.error(error);
+      }
     }
   </script>
 </head>
