@@ -1,4 +1,8 @@
-let users = []; // 内存存储（重启后清空），可替换为数据库
+let users = []; // 内存存储（重启后清空）
+
+export function getUsers() {
+  return users; // 返回用户记录
+}
 
 export default function handler(req, res) {
   if (req.method === 'POST') {
